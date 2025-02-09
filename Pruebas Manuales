@@ -4,6 +4,7 @@ valor_fuera_rango_inferior -> 0
 valor_fuera_rango_superior -> 18000000
 valor_rango_inferior -> 1
 valor_rango_superior -> 5000000
+referencia_especial -> (Prueba=ref#esp-ecía|
 
 ESCENARIO 1: Datos Válidos
 	- Método POST:
@@ -458,5 +459,137 @@ ESCENARIO 6: Valor a Recaudar en el Límite
 		    "id": "32bf6e3cf61a3a2e9482df1753c49d9cd0b72dff"
 		}
 ESCENARIO 7: Caracteres Especiales en la Referencia de Recaudo
-
-	
+	-Método POST:
+		{
+			"identificacion": "890904713",
+			"divisionCliente": "00",
+			"idProceso": 100001,
+			"codigoPais": 170,
+			"valoracion": "200000",
+			"tipoCuenta": 3,
+			"contenido": "reloj",
+			"codigoProducto": "",
+			"nivelServicio": 22,
+			"detalle": [
+		    	{
+		        	"pesoReal": 1,
+		        	"largo": 5,
+		        	"ancho": 5,
+		        	"alto": 3,
+		        	"unidades": 1,
+		        	"ubl": 0,
+		        	"referencia": "ref detalle"
+		    	}
+			],
+			"datosRemitente": {
+		    	"identificacion": "1020304044",
+		    	"detalleRemitente": "Casa",
+		    	"tipoViaRemitente": "7",
+		    	"viaRemitente": "15",
+		    	"numeroRemitente": "53 48",
+		    	"codigoCiudadRemitente": "76001000",
+		    	"descripcionTipoViaRemitente": "Calle",
+		    	"direccionRemitente": "Calle 53 # 53 48",
+		    	"nombreRemitente": "Remitente Prueba",
+		    	"indicativoRemitente": "57",
+		    	"celularRemitente": "3007876543",
+		    	"correoRemitente": "pruebaremitente@coo.com"
+			},
+			"datosDestinatario": {
+		    	"identificacion": "1254511109",
+		    	"detalleDestinatario": "Casa",
+		    	"tipoViaDestinatario": "5",
+		    	"viaDestinatario": "15",
+		    	"numeroDestinatario": "45 93",
+		    	"descripcionTipoViaDestinatario": "Calle",
+		    	"direccionDestinatario": "calle 45 93",
+		    	"codigoCiudadDestinatario": "76001000",
+		    	"nombreDestinatario": "Destinatario Prueba",
+		    	"indicativoDestinatario": "57",
+		    	"celularDestinatario": "3216549825",
+		    	"correoDestinatario": "pruebadestinatario@coor.com"
+			},
+			"valorRecaudar": "38500",
+			"referenciaRecaudo": "{{referencia_especial}}",
+			"tipoGuia": 1,
+			"referenciaGuia": "Ref guía",
+			"usuario": "prueba@coordinaora.com",
+			"fuente": "envios",
+			"observaciones": "prueba RCE"
+		}
+	-Método GET:
+		{
+		    "isError": false,
+		    "data": {
+		        "codigoRemision": "99020276435",
+		        "identificacion": "890904713",
+		        "division": "00",
+		        "proceso": 100001,
+		        "tipoCuenta": "3",
+		        "nombreRemitente": "Remitente Prueba",
+		        "documentoRemitente": null,
+		        "tipoDocumentoRemitente": null,
+		        "divisionRemitente": null,
+		        "indicativoRemitente": "57",
+		        "celularRemitente": "3007876543",
+		        "correoRemitente": "pruebaremitente@coo.com",
+		        "ciudadRemitente": "76001000",
+		        "detalleRemitente": "Casa",
+		        "tipoViaRemitente": "7",
+		        "descripcionTipoViaRemitente": "Calle",
+		        "viaRemitente": "15",
+		        "numeroRemitente": "53 48",
+		        "otraDireccionRemitente": null,
+		        "direccionRemitente": "Calle 53 # 53 48",
+		        "terminalRemitente": 3,
+		        "nombreDestinatario": "Destinatario Prueba",
+		        "documentoDestinatario": null,
+		        "tipoDocumentoDestinatario": null,
+		        "divisionDestinatario": null,
+		        "indicativoDestinatario": "57",
+		        "celularDestinatario": "3216549825",
+		        "correoDestinatario": "pruebadestinatario@coor.com",
+		        "ciudadDestinatario": "76001000",
+		        "detalleDestinatario": "Casa",
+		        "tipoViaDestinatario": "5",
+		        "descripcionTipoViaDestinatario": "Calle",
+		        "viaDestinatario": "15",
+		        "numeroDestinatario": "45 93",
+		        "otraDireccionDestinatario": null,
+		        "direccionDestinatario": "calle 45 93",
+		        "terminalDestinatario": 3,
+		        "valorDeclarado": "200000",
+		        "referenciaGuia": "Ref guía",
+		        "observaciones": "prueba RCE",
+		        "contenido": "reloj",
+		        "nivelServicio": 22,
+		        "valorRecaudar": 38500,
+		        "referenciaRecaudo": "{{referencia_especial}}",
+		        "tipoProducto": null,
+		        "tipoEnvioEspecial": null,
+		        "quienPagaEnvio": null,
+		        "codigoPais": 170,
+		        "codigoPostalRemitente": null,
+		        "codigoPostalDestinatario": null,
+		        "idFiscal": null,
+		        "datosRetorno": null,
+		        "detalle": [
+		            {
+		                "largo": 5,
+		                "alto": 3,
+		                "ancho": 5,
+		                "peso": 1,
+		                "cantidad": 1,
+		                "referencia": "ref detalle",
+		                "ubl": 2,
+		                "contenido": null,
+		                "id_contenido": null,
+		                "codigoPaquete": null,
+		                "nombrePaquete": null,
+		                "valorDeclarado": null
+		            }
+		        ]
+		    },
+		    "timestamp": "2025-02-09T23:24:59.326Z",
+		    "id": "25cda9dbbb8d09373f5ecc4e21a7f09eb6a39aed"
+		}
