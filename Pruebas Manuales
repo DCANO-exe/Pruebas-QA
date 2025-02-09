@@ -1,4 +1,7 @@
-LINK: https://apiv2-test.coordinadora.com/guias/cm-guias-ms/guia
+Se crearon las siguientes variables:
+referencia_invalida -> Contiene más de 50 caracteres con el fin de validar el límite para el campo de "referenciaRecaudo"
+
+
 
 ESCENARIO 1: Datos Válidos
 	- Método POST:
@@ -136,5 +139,26 @@ ESCENARIO 1: Datos Válidos
 		    "timestamp": "2025-02-09T19:35:48.214Z",
 		    "id": "6587ce11c4fae35fdde2d6e75449b9ab0e4d7f12"
 		}
+
 ESCENARIO 2: Referencia de Recaudo Inválida
+		{
+		  // ... (resto del JSON igual)
+		  "referenciaRecaudo": "{{referencia_invalida}}",
+		  // ... (resto del JSON igual)
+		}
+
+ESCENARIO 3: Valor a Recaudar Fuera de Rango
+
+
+ESCENARIO 4: Campos Obligatorios Vacíos
+
+
+ESCENARIO 5: Datos Opcionales Omitidos
+
+
+ESCENARIO 6: Valor a Recaudar en el Límite
+
+
+ESCENARIO 7: Caracteres Especiales en la Referencia de Recaudo
+
 	
