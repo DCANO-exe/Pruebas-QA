@@ -177,7 +177,6 @@ ESCENARIO 5: Datos Opcionales Omitidos
 
 
 ESCENARIO 6: Valor a Recaudar en el Límite
-
 		{
 		  // ... (resto del JSON igual)
 		"contenido": "reloj",
