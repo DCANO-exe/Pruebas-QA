@@ -148,10 +148,30 @@ ESCENARIO 2: Referencia de Recaudo Inválida
 		}
 
 ESCENARIO 3: Valor a Recaudar Fuera de Rango
-
+		{
+		  // ... (resto del JSON igual)
+		"valorRecaudar": "{{valor_fuera_rango_inferior}}",
+		  // ... (resto del JSON igual)
+		}
+		{
+		  // ... (resto del JSON igual)
+		"valorRecaudar": "{{valor_fuera_rango_superior}}",
+		  // ... (resto del JSON igual)
+		}
 
 ESCENARIO 4: Campos Obligatorios Vacíos
-
+		{
+		  // ... (resto del JSON igual)
+		"valorRecaudar": "",
+		"referenciaRecaudo": "referencia",
+		  // ... (resto del JSON igual)
+		}
+		{
+		  // ... (resto del JSON igual)
+		"valorRecaudar": "11",
+		"referenciaRecaudo": "",
+		  // ... (resto del JSON igual)
+		}
 
 ESCENARIO 5: Datos Opcionales Omitidos
 
