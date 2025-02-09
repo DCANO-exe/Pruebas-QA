@@ -174,9 +174,6 @@ ESCENARIO 4: Campos Obligatorios Vacíos
 		}
 
 ESCENARIO 5: Datos Opcionales Omitidos
-
-
-ESCENARIO 6: Valor a Recaudar en el Límite
 		{
 		  // ... (resto del JSON igual)
 		"contenido": "reloj",
@@ -189,6 +186,8 @@ ESCENARIO 6: Valor a Recaudar en el Límite
 		"observaciones" //Se eliminara este campo para verificar que no afectan al formulario
 		  // ... (resto del JSON igual)
 		}
+ESCENARIO 6: Valor a Recaudar en el Límite
+
 ESCENARIO 7: Caracteres Especiales en la Referencia de Recaudo
 
 	
