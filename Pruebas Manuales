@@ -4,7 +4,7 @@ valor_fuera_rango_inferior -> 0
 valor_fuera_rango_superior -> 18000000
 valor_rango_inferior -> 1
 valor_rango_superior -> 5000000
-referencia_especial -> (Prueba=ref#esp-ecía|
+referencia_especial -> #_&%$!@#[]{};':,./<>?|123
 
 ESCENARIO 1: Datos Válidos
 	- Método POST:
