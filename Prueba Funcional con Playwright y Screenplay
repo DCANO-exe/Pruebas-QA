@@ -1,5 +1,6 @@
 La estructura está organizada de la siguiente forma:
 Prueba_QA
+serenity.js
   actors
     usuario_autenticado.js
   task
@@ -14,6 +15,28 @@ Prueba_QA
   crear_guia_spec.js
 /-------------------------/
 CODIGOS DE CADA ARCHIVO
+
+++serenity.js++
+{
+    "crew": [
+      "@serenity-js/reporter",
+      "@serenity-js/console-reporter"
+    ],
+    "serenity": {
+      "outputDirectory": "target/site/serenity",
+      "dialect": "es"
+    },
+    "playwright": {
+      "reporter": [
+        [
+          "playwright-serenity",
+          {
+            "outputDir": "target/site/serenity/screenshots"
+          }
+        ]
+      ]
+    }
+  }
 
 **usuario_autenticado.js**
 const { Actor } = require('@serenity-js/core');
