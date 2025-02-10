@@ -1,6 +1,8 @@
 Para el archivo prueba_carga_estres.py se tiene el siguiente código:
 
-from locust import HttpUser, task, between
+
+++PARA PRUEBA DE CARGA++
+rom locust import HttpUser, task, between
 from locust.contrib.fasthttp import FastHttpUser
 
 class Usuario(FastHttpUser):
@@ -10,3 +12,27 @@ class Usuario(FastHttpUser):
     @task(5)
     def consulta_guia(self):
         self.client.get("/guias/cm-guias-consultas-ms/guia/99020012725")
+
+++PARA PRUEBA DE ESTRES++
+from locust import HttpUser, task, between, constant_throughput
+from locust.contrib.fasthttp import FastHttpUser
+import time
+
+class Usuario(FastHttpUser):
+    wait_time = between(0.5, 1)
+    host = "https://apiv2-test.coordinadora.com"
+    start_time = None
+    request_rate = 10  # Solicitudes iniciales por segundo
+
+    def on_start(self):
+        self.start_time = time.time()
+
+    @task(5)
+    def consulta_guia(self):
+        self.client.get("/guias/cm-guias-consultas-ms/guia/99020012725")
+
+        elapsed_time = time.time() - self.start_time
+        if elapsed_time <= 60:  # Primer minuto
+            self.request_rate = min(100, 10 + int(elapsed_time * 1.5))  # Incrementa hasta 100
+
+        constant_throughput(self.request_rate)
