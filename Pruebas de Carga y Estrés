@@ -1,1 +1,12 @@
+Para el archivo prueba_carga_estres.py se tiene el siguiente código:
 
+from locust import HttpUser, task, between
+from locust.contrib.fasthttp import FastHttpUser
+
+class Usuario(FastHttpUser):
+    wait_time = between(0.5, 1)
+    host = "https://apiv2-test.coordinadora.com"
+
+    @task(5)
+    def consulta_guia(self):
+        self.client.get("/guias/cm-guias-consultas-ms/guia/99020012725")
