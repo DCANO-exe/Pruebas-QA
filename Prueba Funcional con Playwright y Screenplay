@@ -30,3 +30,293 @@ class UsuarioAutenticado extends Actor {
 }
 
 module.exports = { UsuarioAutenticado };
+    
+++creacion_guia.js++
+const { Task } = require('@serenity-js/core');
+const { CallAnApi } = require('@serenity-js/rest');
+
+class CrearGuia extends Task {
+  static conDatos(datos) {
+    return new CrearGuia(datos);
+  }
+
+  constructor(datos) {
+    super();
+    this.datos = datos;
+  }
+
+  performAs(actor) { //Solicitud POST conn CallAnApi
+    return actor.attemptsTo(
+      CallAnApi.as(actor).post('/guias/cm-guias-ms/guia', this.datos)
+    );
+  }
+}
+
+module.exports = { CrearGuia };
+
+++datos_opcionales_omitidos.js++
+const { Task } = require('@serenity-js/core');
+const { CallAnApi } = require('@serenity-js/rest');
+const { Ensure, includes } = require('@serenity-js/assertions');
+
+class DatosOpcionalesOmitidos extends Task {
+  static conDatos(datos) {
+    return new DatosOpcionalesOmitidos(datos);
+  }
+
+  constructor(datos) {
+    super();
+    this.datos = datos;
+  }
+
+  performAs(actor) {
+    return actor.attemptsTo(
+      CallAnApi.as(actor).post('/guias/cm-guias-ms/guia', this.datos),
+      Ensure.that(res => res.status, includes('200')), // Verificación código 200
+    );
+  }
+}
+
+module.exports = { DatosOpcionalesOmitidos };
+
+++validar_campos_obligatorios.js++
+const { Task } = require('@serenity-js/core');
+const { CallAnApi } = require('@serenity-js/rest');
+const { Ensure, includes } = require('@serenity-js/assertions');
+
+class ValidarCamposObligatorios extends Task {
+  static conDatos(datos) {
+    return new ValidarCamposObligatorios(datos);
+  }
+
+  constructor(datos) {
+    super();
+    this.datos = datos;
+  }
+
+  performAs(actor) {
+    return actor.attemptsTo(
+      CallAnApi.as(actor).post('/guias/cm-guias-ms/guia', this.datos),
+      Ensure.that(res => res.status, includes('400')), // Verificación código 400
+      Ensure.that(res => res.body.message, includes('Error: Los campos obligatorios están vacíos'))
+    );
+  }
+}
+
+module.exports = { ValidarCamposObligatorios };
+
+++validar_caracteres_especiales.js++
+const { Task } = require('@serenity-js/core');
+const { CallAnApi } = require('@serenity-js/rest');
+const { Ensure, includes } = require('@serenity-js/assertions');
+
+class ValidarCaracteresEspeciales extends Task {
+  static conDatos(datos) {
+    return new ValidarCaracteresEspeciales(datos);
+  }
+
+  constructor(datos) {
+    super();
+    this.datos = datos;
+  }
+
+  performAs(actor) {
+    return actor.attemptsTo(
+      CallAnApi.as(actor).post('/guias/cm-guias-ms/guia', this.datos),
+      Ensure.that(res => res.status, includes('200')), // Verificación código 200
+    );
+  }
+}
+
+module.exports = { ValidarCaracteresEspeciales };
+
+++validar_error_referencia.js++
+const { Task } = require('@serenity-js/core');
+const { CallAnApi } = require('@serenity-js/rest');
+const { Ensure, includes } = require('@serenity-js/assertions');
+
+class ValidarErrorReferencia extends Task {
+  static conDatos(datos) {
+    return new ValidarErrorReferencia(datos);
+  }
+
+  constructor(datos) {
+    super();
+    this.datos = datos;
+  }
+
+  performAs(actor) {
+    return actor.attemptsTo(
+      CallAnApi.as(actor).post('/guias/cm-guias-ms/guia', this.datos),
+      Ensure.that(res => res.status, includes('400')), // Verificación código 400
+      Ensure.that(res => res.body.message, includes('Error: La referencia de recaudo es inválida'))
+    );
+  }
+}
+
+module.exports = { ValidarErrorReferencia };
+
+++validar_valor_fuera_rango.js++
+const { Task } = require('@serenity-js/core');
+const { CallAnApi } = require('@serenity-js/rest');
+const { Ensure, includes } = require('@serenity-js/assertions');
+
+class ValidarValorFueraRango extends Task {
+  static conDatos(datos) {
+    return new ValidarValorFueraRango(datos);
+  }
+
+  constructor(datos) {
+    super();
+    this.datos = datos;
+  }
+
+  performAs(actor) {
+    return actor.attemptsTo(
+      CallAnApi.as(actor).post('/guias/cm-guias-ms/guia', this.datos),
+      Ensure.that(res => res.status, includes('400')), // Verificación código 400
+      Ensure.that(res => res.body.message, includes('Error: El valor a recaudar está fuera de rango'))
+    );
+  }
+}
+
+module.exports = { ValidarValorFueraRango };
+
+++validar_valor_limite.js++
+const { Task } = require('@serenity-js/core');
+const { CallAnApi } = require('@serenity-js/rest');
+const { Ensure, includes } = require('@serenity-js/assertions');
+
+class ValidarValorLimite extends Task {
+  static conDatos(datos) {
+    return new ValidarValorLimite(datos);
+  }
+
+  constructor(datos) {
+    super();
+    this.datos = datos;
+  }
+
+  performAs(actor) {
+    return actor.attemptsTo(
+      CallAnApi.as(actor).post('/guias/cm-guias-ms/guia', this.datos),
+      Ensure.that(res => res.status, includes('200')), // Verifica código 200
+    );
+  }
+}
+
+module.exports = { ValidarValorLimite };
+
+++crear_guia_spec.js++
+// src/test/crear_guia_spec.js
+const { UsuarioAutenticado } = require('../actors/usuario_autenticado');
+const { CrearGuia } = require('../tasks/crear_guia');
+const { Ensure, isPresent, includes } = require('@serenity-js/assertions');
+const { ValidarErrorReferencia } = require('../tasks/validar_error_referencia');
+const { ValidarValorFueraRango } = require('../tasks/validar_valor_fuera_rango');
+const { ValidarCamposObligatorios } = require('../tasks/validar_campos_obligatorios');
+const { ValidarValorLimite } = require('../tasks/validar_valor_limite');
+const { ValidarCaracteresEspeciales } = require('../tasks/validar_caracteres_especiales');
+const { DatosOpcionalesOmitidos } = require('../tasks/datos_opcionales_omitidos');
+
+describe('Creación de guía', () => {//suite de pruebas
+  const datosValidos = {
+    identificacion: '987654321',
+    divisionCliente: '01',
+    idProceso: 200002,
+    codigoPais: 840,
+    valoracion: '550000',
+    tipoCuenta: 5,
+    contenido: "libros",
+    nivelServicio: 22,
+    detalle: [
+      { pesoReal: 2.5, largo: 20, ancho: 15, alto: 10, unidades: 3, ubl: 1, referencia: "ref detalle 2" }
+    ],
+    datosRemitente: {
+      identificacion: "555555555", detalleRemitente: "Oficina", tipoViaRemitente: "1", viaRemitente: "Carrera",
+      numeroRemitente: "100", codigoCiudadRemitente: "11001000", descripcionTipoViaRemitente: "Carrera",
+      direccionRemitente: "Carrera 100 # 50-20", nombreRemitente: "Remitente Ejemplo", indicativoRemitente: "1",
+      celularRemitente: "1234567890", correoRemitente: "remitente@ejemplo.com"
+    },
+    datosDestinatario: {
+      identificacion: "666666666", detalleDestinatario: "Apartamento", tipoViaDestinatario: "3", viaDestinatario: "Avenida",
+      numeroDestinatario: "200", codigoCiudadDestinatario: "05001000", descripcionTipoViaDestinatario: "Avenida",
+      direccionDestinatario: "Avenida 200 # 10-5", nombreDestinatario: "Destinatario Ejemplo", indicativoDestinatario: "1",
+      celularDestinatario: "9876543210", correoDestinatario: "destinatario@ejemplo.com"
+    },
+    valorRecaudar: "120000",
+    referenciaRecaudo: "ref recaudo prueba 2",
+    tipoGuia: 2,
+    referenciaGuia: "Ref guía 2",
+    usuario: "usuario_prueba@ejemplo.com",
+    fuente: "pruebas"
+  };
+
+  it('Debería crear una guía con datos válidos', () => {
+    const daniel = UsuarioAutenticado.named('Daniel');
+    return daniel.attemptsTo(
+      CrearGuia.conDatos(datosValidos),
+      Ensure.that(res => res.status, includes('200')), // Verificación código 200
+      Ensure.that(res => res.body.id_guia, isPresent()) // Ajusta la aserción de datos
+    );
+  });
+
+
+  it('Debería validar error de referencia', () => {
+    const datosInvalidos = { ...datosValidos, referenciaRecaudo: 'Este valor de refencia es demasiado larga y por ende excede el limite de caracteres definido' }; // Referencia inválida
+    const daniel = UsuarioAutenticado.named('Daniel');
+    return daniel.attemptsTo(
+      ValidarErrorReferencia.conDatos(datosInvalidos)
+    );
+  });
+
+  it('Debería validar valor fuera de rango', () => {
+    const datosInvalidos = { ...datosValidos, valorRecaudar: '18000000' };
+    const daniel = UsuarioAutenticado.named('Daniel');
+    return daniel.attemptsTo(
+      ValidarValorFueraRango.conDatos(datosInvalidos)
+    );
+  });
+
+  it('Debería validar campos obligatorios vacíos', () => {
+    const datosInvalidos = { ...datosValidos, referenciaRecaudo: '', valorRecaudar: '' };
+    const daniel = UsuarioAutenticado.named('Daniel');
+    return daniel.attemptsTo(
+      ValidarCamposObligatorios.conDatos(datosInvalidos)
+    );
+  });
+
+  it('Debería validar valor en el límite inferior', () => {
+    const datosValidosLimiteInferior = { ...datosValidos, valorRecaudar: '1' };
+    const daniel = UsuarioAutenticado.named('Daniel');
+    return daniel.attemptsTo(
+      ValidarValorLimite.conDatos(datosValidosLimiteInferior)
+    );
+  });
+
+  it('Debería validar valor en el límite superior', () => {
+    const datosValidosLimiteSuperior = { ...datosValidos, valorRecaudar: '5000000' };
+    const daniel = UsuarioAutenticado.named('Daniel');
+    return daniel.attemptsTo(
+      ValidarValorLimite.conDatos(datosValidosLimiteSuperior)
+    );
+  });
+
+  it('Debería validar caracteres especiales', () => {
+    const datosValidosCaracteres = { ...datosValidos, referenciaRecaudo: '#_&%$!@#[]{};:,./<>?|123'};
+    const daniel = UsuarioAutenticado.named('Daniel');
+    return daniel.attemptsTo(
+      ValidarCaracteresEspeciales.conDatos(datosValidosCaracteres)
+    );
+  });
+
+  it('Debería validar datos opcionales omitidos', () => {
+    const datosSinOpcionales = { ...datosValidos };
+    delete datosSinOpcionales.codigoProducto; 
+    delete datosSinOpcionales.observaciones; 
+    const daniel = UsuarioAutenticado.named('Daniel');
+    return daniel.attemptsTo(
+      DatosOpcionalesOmitidos.conDatos(datosSinOpcionales)
+    );
+  });
+});
