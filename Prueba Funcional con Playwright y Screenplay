@@ -1,1 +1,32 @@
+La estructura está organizada de la siguiente forma:
+Prueba_QA
+  actors
+    usuario_autenticado.js
+  task
+    creacion_guia.js
+    datos_opcionales_omitidos.js
+    validar_campos_obligatorios.js
+    validar_caracteres_especiales.js
+    validar_error_referencia.js
+    validar_valor_fuera_rango.js
+    validar_valor_limite.js
+  test
+  crear_guia_spec.js
+/-------------------------/
+CODIGOS DE CADA ARCHIVO
 
+*usuario_autenticado.js*
+const { Actor } = require('@serenity-js/core');
+const { CallAnApi } = require('@serenity-js/rest');
+const { BrowseTheWeb } = require('@serenity-js/playwright');
+
+class UsuarioAutenticado extends Actor {
+  constructor(name) {
+    super(name,
+      CallAnApi.using({ baseURL: 'https://apiv2-test.coordinadora.com/guias/cm-guias-ms/guia' }),
+      BrowseTheWeb.using({ browser: 'chromium', headless: true })
+    );
+  }
+}
+
+module.exports = { UsuarioAutenticado };
