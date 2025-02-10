@@ -22,7 +22,7 @@ class Usuario(FastHttpUser):
     wait_time = between(0.5, 1)
     host = "https://apiv2-test.coordinadora.com"
     start_time = None
-    request_rate = 10  # Solicitudes iniciales por segundo
+    request_rate = 50  # Solicitudes iniciales por segundo
 
     def on_start(self):
         self.start_time = time.time()
