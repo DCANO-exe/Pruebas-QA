@@ -15,7 +15,7 @@ Prueba_QA
 /-------------------------/
 CODIGOS DE CADA ARCHIVO
 
-*usuario_autenticado.js*
+**usuario_autenticado.js**
 const { Actor } = require('@serenity-js/core');
 const { CallAnApi } = require('@serenity-js/rest');
 const { BrowseTheWeb } = require('@serenity-js/playwright');
